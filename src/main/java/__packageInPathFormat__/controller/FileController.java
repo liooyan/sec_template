@@ -4,17 +4,16 @@ import __packageInPathFormat__.bean.dto.FileDTO;
 import __packageInPathFormat__.bean.params.file.FileSearchParam;
 import __packageInPathFormat__.service.FileService;
 import cn.sec.core.model.base.page.PageData;
+import cn.sec.file.FileInfo;
 import com.sec.autoconfigure.record.Timing;
 import com.sec.autoconfigure.web.response.ExcludeRestRespResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 
 @RestController
@@ -43,10 +42,8 @@ public class FileController {
 
     @ResponseBody
     @GetMapping(value = "/")
-    @Timing
     @ApiOperation("下载文件")
-    public @ExcludeRestRespResponse
-    ResponseEntity<StreamingResponseBody> get(@RequestParam Long id) {
+    public @ExcludeRestRespResponse FileInfo get(@RequestParam Long id) {
 
         return fileService.getFile(id);
     }

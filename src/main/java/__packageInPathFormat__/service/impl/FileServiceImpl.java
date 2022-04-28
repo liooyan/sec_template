@@ -8,17 +8,14 @@ import __packageInPathFormat__.service.FileService;
 import cn.sec.core.exception.ServiceException;
 import cn.sec.core.model.base.page.PageData;
 import cn.sec.core.util.NullUtil;
+import cn.sec.file.FileInfo;
 import cn.sec.file.GeneralFileSystem;
 import cn.sec.file.util.IOUtils;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.sec.autoconfigure.data.AbstractCrudService;
 import com.sec.autoconfigure.data.mybaits.BaseMapping;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -78,19 +75,16 @@ public class FileServiceImpl extends AbstractCrudService<FileEntity> implements 
     }
 
     @Override
-    public ResponseEntity<StreamingResponseBody> getFile(Long id) {
+    public FileInfo getFile(Long id) {
         FileEntity fileEntity = super.getById(id);
-        InputStream inputStream = null;
+
         try {
-            inputStream = generalFileSystem.getInputStream(fileEntity.getPath());
+            FileInfo file = generalFileSystem.getFiles(fileEntity.getPath());
+            file.setName(fileEntity.getName());
+            return file;
         } catch (IOException e) {
             throw ServiceException.newInstance("文件加载异常", e);
         }
-        InputStream finalInputStream = inputStream;
-        return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType("application/octet-stream"))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileEntity.getName() + "\"")
-                .body(outputStream -> IOUtils.copyBytes(finalInputStream, outputStream,1024));
     }
 
     @Override
