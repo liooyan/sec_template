@@ -8,12 +8,12 @@ import __packageInPathFormat__.service.FileService;
 import cn.sec.core.exception.ServiceException;
 import cn.sec.core.model.base.page.PageData;
 import cn.sec.core.util.NullUtil;
-import cn.sec.file.FileInfo;
-import cn.sec.file.GeneralFileSystem;
-import cn.sec.file.util.IOUtils;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.sec.autoconfigure.data.AbstractCrudService;
 import com.sec.autoconfigure.data.mybaits.BaseMapping;
+import com.sec.autoconfigure.file.FileInfo;
+import com.sec.autoconfigure.file.GeneralFileSystem;
+import com.sec.autoconfigure.file.util.IOUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 

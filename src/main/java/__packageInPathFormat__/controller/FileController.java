@@ -4,7 +4,7 @@ import __packageInPathFormat__.bean.dto.FileDTO;
 import __packageInPathFormat__.bean.params.file.FileSearchParam;
 import __packageInPathFormat__.service.FileService;
 import cn.sec.core.model.base.page.PageData;
-import cn.sec.file.FileInfo;
+import com.sec.autoconfigure.file.FileInfo;
 import com.sec.autoconfigure.record.Timing;
 import com.sec.autoconfigure.web.response.ExcludeRestRespResponse;
 import io.swagger.annotations.Api;

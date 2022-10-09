@@ -8,8 +8,8 @@
     <version>0.0.2</version>
     <parent>
         <groupId>cn.lioyan</groupId>
-        <artifactId>sec-boot-starter-parent</artifactId>
-        <version>0.0.3</version>
+        <artifactId>sec-spring-boot-starter</artifactId>
+        <version>0.0.4</version>
     </parent>
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -46,7 +46,6 @@
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
-
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
@@ -54,6 +53,18 @@
         </dependency>
 
 
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+        </dependency>
     </dependencies>
 
 
