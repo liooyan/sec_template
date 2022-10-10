@@ -1,20 +1,13 @@
 package __packageInPathFormat__.service.impl;
 
-import __packageInPathFormat__.bean.DemoMapper;
-import __packageInPathFormat__.bean.dto.DemoDTO;
 import __packageInPathFormat__.bean.entity.DemoEntity;
-import __packageInPathFormat__.bean.params.demo.DemoAddParam;
-import __packageInPathFormat__.bean.params.demo.DemoSearchParam;
-import __packageInPathFormat__.bean.params.demo.DemoUpdateParam;
+import __packageInPathFormat__.bean.params.demo.*;
+import __packageInPathFormat__.bean.struct.DemoStruct;
 import __packageInPathFormat__.mapping.DemoMapping;
 import __packageInPathFormat__.service.DemoService;
 import cn.sec.core.model.base.page.PageData;
-import cn.sec.core.util.NullUtil;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.sec.autoconfigure.data.AbstractCrudService;
 import com.sec.autoconfigure.data.BaseRepository;
-import com.sec.autoconfigure.data.mybaits.BaseMapping;
-import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,70 +20,51 @@ public class DemoServiceImpl extends AbstractCrudService<DemoEntity> implements 
 
     private final DemoMapping demoMapping;
 
-    private final DemoMapper demoMapper;
+    private final DemoStruct demoStruct;
 
     protected DemoServiceImpl(BaseRepository<DemoEntity> repository, DemoMapping demoMapping,
-                           DemoMapper demoMapper)
+                              DemoStruct demoStruct)
     {
         super(repository);
         this.demoMapping = demoMapping;
-        this.demoMapper = demoMapper;
+        this.demoStruct = demoStruct;
     }
 
     @Override
-    public PageData<DemoDTO> findAll(DemoSearchParam policySearchParam)
+    public PageData<DemoEntity> findAll(DemoSearchParam searchParam)
     {
-        String name = policySearchParam.getName();
-        PageData<DemoEntity> policyEntityPageData;
-        if (NullUtil.isNull(name))
-        {
-            policyEntityPageData = super.listAll(policySearchParam);
-        }
-        else
-        {
-            IPage<DemoEntity> ipage = BaseMapping.pageSort2IPage(policySearchParam);
-            IPage<DemoEntity> policyMappingIPage = demoMapping.selectByName(ipage, name);
-            policyEntityPageData = BaseMapping.page2PageData(policyMappingIPage);
-        }
-        return new PageData<>(
-            policyEntityPageData.getData().stream().map(demoMapper::carToDemoDTO).collect(
-                Collectors.toList()), policyEntityPageData.getCount());
-
+       return   super.listAll(searchParam);
     }
 
     @Override
-    public DemoDTO install(DemoAddParam policyParam)
+    public DemoEntity install(DemoAddParam addParam)
     {
-        DemoEntity policyEntity = policyParam.convertTo();
-        super.create(policyEntity);
-        return demoMapper.carToDemoDTO(policyEntity);
+        DemoEntity entity =demoStruct.addParamsToEntity(addParam);
+        super.create(entity);
+        return entity;
     }
 
     @Override
-    public List<DemoDTO> installBatch(List<DemoAddParam> policyParam)
+    public List<DemoEntity> installBatch(List<DemoAddParam> addParams)
     {
-
-        List<DemoEntity> entityList = policyParam.stream().map(DemoAddParam::convertTo).collect(
+        List<DemoEntity> entityList = addParams.stream().map(demoStruct::addParamsToEntity).collect(
             Collectors.toList());
         super.createInBatch(entityList);
-        return entityList.stream().map(demoMapper::carToDemoDTO).collect(Collectors.toList());
+        return entityList;
     }
 
     @Override
-    public DemoDTO getOne(Long id)
+    public DemoEntity getOne(Long id)
     {
-        DemoEntity policyEntity = super.getById(id);
-        return demoMapper.carToDemoDTO(policyEntity);
+        return super.getById(id);
     }
 
     @Override
-    public DemoDTO update(DemoUpdateParam policyUpdateParam)
+    public DemoEntity update(DemoUpdateParam updateParam)
     {
-        DemoEntity policyEntity = policyUpdateParam.convertTo();
-        missThrowException(policyEntity.getId());
-        policyEntity = super.update(policyEntity);
-
-        return demoMapper.carToDemoDTO(policyEntity);
+        DemoEntity entity = demoStruct.updateParamsToEntity(updateParam);
+        missThrowException(entity.getId());
+        return super.update(entity);
     }
 
     @Override

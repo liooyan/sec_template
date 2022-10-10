@@ -8,7 +8,7 @@ import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.NotEmpty;
 
 @ApiModel("demo添加接口参数")
-public  class DemoAddParam implements InputConverter<DemoEntity> {
+public  class DemoAddParam  {
 
     @NotEmpty(message = "名称不可为空")
     @ApiModelProperty("名称")

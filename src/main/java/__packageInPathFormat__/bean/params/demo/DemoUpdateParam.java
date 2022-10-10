@@ -8,7 +8,7 @@ import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.NotNull;
 
 @ApiModel("demo修改接口参数")
-public  class DemoUpdateParam implements InputConverter<DemoEntity> {
+public  class DemoUpdateParam  {
     @NotNull(message = "id不可为空")
     @ApiModelProperty("id")
     private Long id;
