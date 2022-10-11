@@ -5,6 +5,7 @@ import __packageInPathFormat__.bean.entity.DemoEntity;
 import __packageInPathFormat__.bean.params.demo.*;
 import __packageInPathFormat__.bean.params.demo.DemoSearchParam;
 import __packageInPathFormat__.bean.params.demo.DemoUpdateParam;
+import cn.sec.core.model.base.page.PageData;
 import org.mapstruct.Mapper;
 
 import java.util.List;
@@ -23,6 +24,8 @@ public interface DemoStruct
     DemoDTO entityToDTO(DemoEntity demoEntity);
 
     List<DemoDTO> entityToDTO(List<DemoEntity> demoEntity);
+
+    PageData<DemoDTO> entityToDTO(PageData<DemoEntity> demoEntity);
 
     DemoEntity addParamsToEntity(DemoAddParam demoAddParam);
 

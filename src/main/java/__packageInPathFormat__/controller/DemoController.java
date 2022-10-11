@@ -40,7 +40,7 @@ public class DemoController {
     public PageData<DemoDTO> findAll(@RequestBody DemoSearchParam policySearchParam) {
 
         PageData<DemoEntity> pageData = demoService.findAll(policySearchParam);
-        return new PageData<>(demoStruct.entityToDTO(pageData.getData()), pageData.getCount());
+        return demoStruct.entityToDTO(pageData);
     }
 
     @ResponseBody
